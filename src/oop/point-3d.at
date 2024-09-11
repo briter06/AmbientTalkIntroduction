@@ -1,0 +1,15 @@
+def Point := ~.point;
+
+def Point3D := extend: Point with: {
+    def z := 0;
+    def init(aX,aY,aZ){
+        z := aZ;
+        super^init(aX,aY)
+    };
+    def sumOfSquares() {
+        super^sumOfSquares() + z*z;
+    };
+};
+
+def aPoint3D := Point3D.new(10, 20, 30);
+aPoint3D.sumOfSquares()

@@ -9,7 +9,3 @@ def Point := object: {
 
     def sumOfSquares() { x*x + y*y };
 };
-
-def anotherPoint := Point.new(2,3);
-system.println(anotherPoint.x);
-anotherPoint.sumOfSquares();
