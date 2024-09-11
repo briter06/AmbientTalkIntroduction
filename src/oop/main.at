@@ -1,0 +1,15 @@
+def Point := object: {
+    def x := 0;
+    def y := 0;
+
+    def init(aX,aY) {
+        x := aX;
+        y := aY;
+    };
+
+    def sumOfSquares() { x*x + y*y };
+};
+
+def anotherPoint := Point.new(2,3);
+system.println(anotherPoint.x);
+anotherPoint.sumOfSquares();
