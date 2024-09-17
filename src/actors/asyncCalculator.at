@@ -1,5 +1,11 @@
-def calculator := actor: {
+actor: {
+
+    def start(){
+        `Running;
+    };
+
     def sum(x, y) {
         x + y;
-    }
+    };
+
 };
