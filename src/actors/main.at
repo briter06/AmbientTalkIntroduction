@@ -1,0 +1,9 @@
+import lobby.at.lang.futures;
+
+def calculator := ~.asyncCalculator;
+
+when: calculator<-sum(1, 2)@FutureMessage
+becomes: { |res|
+            system.println(res);};
+
+`running;

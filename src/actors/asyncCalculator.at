@@ -1,0 +1,5 @@
+def calculator := actor: {
+    def sum(x, y) {
+        x + y;
+    }
+};
