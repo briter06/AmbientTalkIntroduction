@@ -1,11 +1,78 @@
 import lobby.at.lang.futures;
+import lobby.at.lang.types;
+
+def IO := jlobby.jutils.IO;
 
 def calculator := ~.asyncCalculator;
+
+def execAction(message, callback) {
+    when: calculator<+message
+    becomes: callback;
+};
+
+def requestNumbers(){
+    system.println("First number:");
+    def n1 := IO.readNextDouble();
+    system.println("Second number");
+    def n2 := IO.readNextDouble();
+    [n1, n2];
+};
+
+def run(){
+    try: {
+        system.println("==================================");
+        system.println("Select one of the following options");
+        system.println("1. Addition");
+        system.println("2. Subtraction");
+        system.println("3. Multiplication");
+        system.println("4. Division");
+        system.println("5. Exit");
+        def option := IO.readNextLine();
+        def callback := { |res| system.println("Result: "+res); run(); };
+        if: option == "1"
+        then: {
+            def [n1, n2] := requestNumbers();
+            execAction(<-sum(n1, n2)@FutureMessage, callback);
+        }
+        else: {
+            if: option == "2"
+            then: {
+                def [n1, n2] := requestNumbers();
+               execAction(<-minus(n1, n2)@FutureMessage, callback);
+            }
+            else: {
+                if: option == "3"
+                then: {
+                   def [n1, n2] := requestNumbers();
+                   execAction(<-multiply(n1, n2)@FutureMessage, callback);
+                }
+                else: {
+                    if: option == "4"
+                    then: {
+                       def [n1, n2] := requestNumbers();
+                       execAction(<-divide(n1, n2)@FutureMessage, callback);
+                    }
+                    else: {
+                        if: option == "5"
+                        then: {
+                           system.println("Bye");
+                        }
+                        else: {
+                            raise: Exception.new("Invalid option");
+                        };
+                    };
+                };
+            };
+        };
+    } catch: Exception using: { |e| system.println("Error! Try again!"); run(); };
+};
 
 when: calculator<-start()@FutureMessage
 becomes: {
     |res|
     system.println(res);
+    IO.initScanner();
+    run();
 };
 
 `Starting;
